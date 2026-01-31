@@ -1,0 +1,58 @@
+{
+  "name": "selena-ai-sdk",
+  "version": "1.0.1",
+  "description": "SDK JavaScript moderno para Selena AI",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "selena": "bin/selena"
+  },
+  "scripts": {
+    "build": "echo 'ESM ready - no build needed'",
+    "docs:dev": "vitepress dev docs --port 8123 --host",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "test": "node examples/basic-usage.js",
+    "lint": "echo 'Add ESLint if needed'",
+    "start": "node examples/basic-usage.js"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.11",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  },
+  "keywords": [
+    "ai",
+    "selena",
+    "sdk",
+    "cli",
+    "chat",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "Elaxi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elaxiinc/selena-ai-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elaxiinc/selena-ai-sdk/issues"
+  },
+  "homepage": "https://github.com/elaxiinc/selena-ai-sdk#readme",
+  "files": [
+    "src/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
