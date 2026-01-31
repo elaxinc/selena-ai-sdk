@@ -1,6 +1,6 @@
 {
   "name": "selena-ai-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "SDK JavaScript moderno para Selena AI",
   "type": "module",
   "main": "src/index.js",
