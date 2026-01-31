@@ -209,7 +209,7 @@ Sem dependências de runtime, apenas fetch nativo do Node.js
 
 <a href="/guide/installation" class="VPButton brand">Instalar Agora</a>
 <a href="/examples/usage" class="VPButton alt">Ver Exemplos</a>
-<a href="https://github.com/elaxi/selena-ai-sdk" class="VPButton alt">GitHub</a>
+<a href="https://github.com/elaxinc/selena-ai-sdk" class="VPButton alt">GitHub</a>
 
 </div>
 

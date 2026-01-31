@@ -285,8 +285,8 @@ async function main() {
   
   console.log(colorLog('bright'), colorLog('green'), '\n✅ Todas as demonstrações concluídas!');
   console.log(colorLog('cyan'), '\n📚 Para mais informações:');
-  console.log(colorLog('blue'), '📖 Documentação: https://elaxi.github.io/selena-ai-sdk/');
-  console.log(colorLog('blue'), '🐛 Issues: https://github.com/elaxi/selena-ai-sdk/issues');
+  console.log(colorLog('blue'), '📖 Documentação: https://elaxinc.github.io/selena-ai-sdk/');
+  console.log(colorLog('blue'), '🐛 Issues: https://github.com/elaxinc/selena-ai-sdk/issues');
   console.log(colorLog('blue'), '💬 Dashboard: https://elaxi.xyz/dashboard\n');
 }
 

@@ -43,7 +43,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/elaxi/selena-ai-sdk' }
+      { icon: 'github', link: 'https://github.com/elaxinc/selena-ai-sdk' }
     ],
 
     search: {
