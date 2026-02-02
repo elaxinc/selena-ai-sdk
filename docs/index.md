@@ -6,7 +6,7 @@ hero:
   text: Integração moderna com IA
   tagline: SDK JavaScript elegante e poderoso para conversar com a Selena AI
   image:
-    src: /logo.svg
+    src: /Selena_img.png
     alt: Selena AI
   actions:
     - theme: brand
@@ -28,13 +28,13 @@ features:
     details: Interface de linha de comando interativa para conversas rápidas e produtivas.
   - icon: 📚
     title: Documentação Completa
-    details: Site bonito com VitePress, exemplos práticos e guias detalhados.
+    details: Exemplos práticos e guias detalhados.
   - icon: 🔧
     title: TypeScript Ready
     details: Types incluídos via JSDoc para excelente developer experience e autocomplete.
   - icon: 🚀
     title: Performance
-    details: HTTP client nativo com fetch, timeouts automáticos e tratamento robusto de erros.
+    details: HTTP client nativo, timeouts automáticos e tratamento robusto de erros.
 ---
 
 ## 🌟 Por que Selena AI SDK?
@@ -109,7 +109,7 @@ export SELENA_API_KEY=sua_chave_aqui
 
 ### 3. Usar no Código
 
-```js
+```TypeScript
 import { SelenaAI } from 'selena-ai-sdk';
 
 const client = new SelenaAI({
@@ -207,8 +207,8 @@ Sem dependências de runtime, apenas fetch nativo do Node.js
 
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin: 2rem 0;">
 
-<a href="/guide/installation" class="VPButton brand">Instalar Agora</a>
-<a href="/examples/usage" class="VPButton alt">Ver Exemplos</a>
+<a href="/guide/installation" class="VPButton brand">Instalar Agora</a><br>
+<a href="/examples/usage" class="VPButton alt">Ver Exemplos</a><br>
 <a href="https://github.com/elaxinc/selena-ai-sdk" class="VPButton alt">GitHub</a>
 
 </div>
