@@ -14,7 +14,7 @@ hero:
       link: /guide/installation
     - theme: alt
       text: Ver no GitHub
-      link: https://github.com/elaxiinc/selena-ai-sdk
+      link: https://github.com/elaxinc/selena-ai-sdk
 
 features:
   - icon: ⚡
@@ -216,6 +216,6 @@ Sem dependências de runtime, apenas fetch nativo do Node.js
 <div class="custom-card" style="text-align: center; margin-top: 3rem;">
 
 **Feito com ❤️ pela equipe Elaxi**  
-[Documentação da API](https://elaxi.xyz/docs) • [Dashboard](https://elaxi.xyz/dashboard) • [Support](https://github.com/elaxiinc/selena-ai-sdk/issues)
+[Documentação da API](https://elaxi.xyz/docs) • [Dashboard](https://elaxi.xyz/dashboard) • [Support](https://github.com/elaxinc/selena-ai-sdk/issues)
 
 </div>

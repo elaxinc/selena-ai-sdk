@@ -1,6 +1,6 @@
 {
   "name": "selena-ai-sdk",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "SDK JavaScript moderno para Selena AI",
   "type": "module",
   "main": "src/index.js",
@@ -37,12 +37,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elaxiinc/selena-ai-sdk.git"
+    "url": "git+https://github.com/elaxinc/selena-ai-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/elaxiinc/selena-ai-sdk/issues"
+    "url": "https://github.com/elaxinc/selena-ai-sdk/issues"
   },
-  "homepage": "https://github.com/elaxiinc/selena-ai-sdk#readme",
+  "homepage": "https://github.com/elaxinc/selena-ai-sdk#readme",
   "files": [
     "src/",
     "bin/",

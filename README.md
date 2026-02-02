@@ -107,7 +107,7 @@ selena ask "Me conte uma história" --stream
 
 ## 📖 Documentação
 
-Visite [selena-ai-sdk-docs](https://elaxiinc.github.io/selena-ai-sdk/) para documentação completa.
+Visite [selena-ai-sdk-docs](https://elaxinc.github.io/selena-ai-sdk/) para documentação completa.
 
 ## 🔧 Opções de Configuração
 
@@ -142,9 +142,9 @@ MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ## 🔗 Links
 
-- [Documentação](https://elaxiinc.github.io/selena-ai-sdk/)
+- [Documentação](https://elaxinc.github.io/selena-ai-sdk/)
 - [API Selena](https://elaxi.xyz/docs)
-- [Issues](https://github.com/elaxiinc/selena-ai-sdk/issues)
+- [Issues](https://github.com/elaxinc/selena-ai-sdk/issues)
 - [Dashboard](https://elaxi.xyz/dashboard)
 
 ---
