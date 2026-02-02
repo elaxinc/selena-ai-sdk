@@ -1,0 +1,412 @@
+# Chat API
+
+Referência completa da API de Chat do Selena AI SDK.
+
+## 📋 ChatAPI
+
+Classe que implementa o endpoint `/api/chat` da Selena AI.
+
+### Acesso
+
+Através do cliente principal:
+
+```js
+const chat = client.chat;
+```
+
+### Métodos
+
+#### `completions(params)`
+
+Cria uma completion de chat.
+
+**Parâmetros:**
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+|-----------|------|-------------|-----------|
+| `params` | Object | Sim | Parâmetros da requisição |
+| `params.model` | string | Não | Modelo a ser usado (padrão: `selena-pro-v1`) |
+| `params.message` | string | Sim | Mensagem/prompt para a IA |
+| `params.stream` | boolean | Não | Habilitar streaming (padrão: `false`) |
+| `params.onToken` | Function | Não | Callback para cada token (quando stream=true) |
+
+**Retorno:** Promise<Object>
+- `response` (string): Resposta gerada pela IA
+
+**Exemplos:**
+
+```js
+// Básico
+const response = await client.chat.completions({
+  message: 'Olá, mundo!'
+});
+console.log(response.response);
+
+// Com modelo específico
+const response = await client.chat.completions({
+  model: 'selena-pro-v1',
+  message: 'Explique o que é JavaScript'
+});
+
+// Streaming
+await client.chat.completions({
+  message: 'Conte uma história',
+  stream: true,
+  onToken: (token) => {
+    console.log(token);
+  }
+});
+```
+
+## 🔧 Exemplos Práticos
+
+### Conversa Simples
+
+```js
+import { SelenaAI } from 'selena-ai-sdk';
+
+const client = new SelenaAI({
+  apiKey: process.env.SELENA_API_KEY,
+  logging: 'info'
+});
+
+async function simpleChat() {
+  const response = await client.chat.completions({
+    message: 'Qual a diferença entre let e const em JavaScript?'
+  });
+  
+  console.log('Resposta:', response.response);
+}
+
+simpleChat();
+```
+
+### Chat com Streaming
+
+```js
+async function streamingChat(message) {
+  console.log('🤖 Selena: ');
+  
+  await client.chat.completions({
+    model: 'selena-pro-v1',
+    message,
+    stream: true,
+    onToken: (token) => {
+      process.stdout.write(token);
+    }
+  });
+  
+  console.log(); // Nova linha
+}
+
+streamingChat('Me explique sobre programação assíncrona');
+```
+
+### Chat com Validação
+
+```js
+async function validatedChat(userMessage) {
+  if (!userMessage || typeof userMessage !== 'string') {
+    throw new Error('Mensagem inválida');
+  }
+  
+  if (userMessage.length < 1) {
+    throw new Error('A mensagem não pode estar vazia');
+  }
+  
+  if (userMessage.length > 10000) {
+    throw new Error('A mensagem é muito longa (máx: 10000 caracteres)');
+  }
+  
+  try {
+    const response = await client.chat.completions({
+      message: userMessage
+    });
+    
+    return response.response;
+  } catch (error) {
+    console.error('Erro no chat:', error.message);
+    throw error;
+  }
+}
+```
+
+### Chat com Retry
+
+```js
+async function chatWithRetry(message, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await client.chat.completions({
+        message,
+        model: 'selena-pro-v1'
+      });
+      
+      return response.response;
+    } catch (error) {
+      console.error(`Tentativa ${attempt} falhou:`, error.message);
+      
+      if (attempt === maxRetries) {
+        throw new Error(`Falha após ${maxRetries} tentativas: ${error.message}`);
+      }
+      
+      // Espera exponencial
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+    }
+  }
+}
+```
+
+## 📊 Resposta da API
+
+### Estrutura da Resposta
+
+```json
+{
+  "response": "Resposta gerada pela Selena AI"
+}
+```
+
+### Resposta em Streaming
+
+Durante o streaming, cada chunk contém:
+
+```json
+{"token": "parte"}
+{"token": "da"}
+{"token": "resposta"}
+{"token": "..."}
+[DONE]
+```
+
+## 🔧 Configurações Avançadas
+
+### Models Disponíveis
+
+- `selena-pro-v1` (padrão) - Modelo principal para produção
+- `selena-fast-v1` - Modelo mais rápido para testes
+- `selena-creative-v1` - Modelo mais criativo
+
+```js
+// Usando modelo específico
+const response = await client.chat.completions({
+  model: 'selena-creative-v1',
+  message: 'Escreva um poema sobre tecnologia'
+});
+```
+
+### Timeout Customizado
+
+```js
+// Aumentando timeout para respostas longas
+const client = new SelenaAI({
+  apiKey: process.env.SELENA_API_KEY,
+  timeout: 60000 // 60 segundos
+});
+```
+
+## 🎯 Melhores Práticas
+
+### 1. Validação de Input
+
+Sempre valide as mensagens antes de enviar:
+
+```js
+function validateMessage(message) {
+  if (!message || typeof message !== 'string') {
+    throw new Error('Mensagem inválida');
+  }
+  
+  if (message.trim().length === 0) {
+    throw new Error('Mensagem não pode estar vazia');
+  }
+  
+  if (message.length > 10000) {
+    throw new Error('Mensagem muito longa');
+  }
+  
+  return message.trim();
+}
+
+// Uso
+const validMessage = validateMessage(userInput);
+const response = await client.chat.completions({
+  message: validMessage
+});
+```
+
+### 2. Tratamento de Erros
+
+```js
+import { APIError, NetworkError, ValidationError } from 'selena-ai-sdk';
+
+async function safeChat(message) {
+  try {
+    const response = await client.chat.completions({ message });
+    return response.response;
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.error('Erro de validação:', error.message);
+    } else if (error instanceof APIError) {
+      console.error('Erro da API:', error.message, 'Status:', error.status);
+    } else if (error instanceof NetworkError) {
+      console.error('Erro de rede:', error.message);
+    } else {
+      console.error('Erro desconhecido:', error.message);
+    }
+    throw error;
+  }
+}
+```
+
+### 3. Uso de Cache
+
+```js
+const cache = new Map();
+
+async function cachedChat(message) {
+  const cacheKey = message.toLowerCase().trim();
+  
+  if (cache.has(cacheKey)) {
+    console.log('📦 Usando cache');
+    return cache.get(cacheKey);
+  }
+  
+  const response = await client.chat.completions({ message });
+  cache.set(cacheKey, response.response);
+  
+  return response.response;
+}
+```
+
+### 4. Rate Limiting
+
+```js
+let lastRequest = 0;
+const MIN_INTERVAL = 1000; // 1 segundo entre requests
+
+async function rateLimitedChat(message) {
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastRequest;
+  
+  if (timeSinceLastRequest < MIN_INTERVAL) {
+    const waitTime = MIN_INTERVAL - timeSinceLastRequest;
+    await new Promise(resolve => setTimeout(resolve, waitTime));
+  }
+  
+  lastRequest = Date.now();
+  return await client.chat.completions({ message });
+}
+```
+
+## 🔍 Debug e Monitoramento
+
+### Logging Detalhado
+
+```js
+const client = new SelenaAI({
+  apiKey: process.env.SELENA_API_KEY,
+  logging: 'debug' // Mostra requests/responses completos
+});
+
+// Monitorar performance
+async function monitoredChat(message) {
+  const start = Date.now();
+  
+  try {
+    const response = await client.chat.completions({ message });
+    const duration = Date.now() - start;
+    
+    console.log(`⏱️ Resposta em ${duration}ms`);
+    console.log(`📏 Tamanho: ${response.response.length} caracteres`);
+    
+    return response.response;
+  } catch (error) {
+    const duration = Date.now() - start;
+    console.error(`❌ Erro após ${duration}ms:`, error.message);
+    throw error;
+  }
+}
+```
+
+### Metrics Coletadas
+
+- **Latency**: Tempo de resposta
+- **Token Usage**: Número de tokens processados
+- **Error Rate**: Taxa de erros
+- **Cache Hit Rate**: Eficiência do cache
+
+## 🚀 Exemplos de Uso
+
+### Bot para Telegram
+
+```js
+class TelegramBot {
+  constructor(apiToken, selenaClient) {
+    this.client = selenaClient;
+    this.bot = new TelegramBot(apiToken);
+  }
+  
+  async handleMessage(msg) {
+    const chatId = msg.chat.id;
+    const message = msg.text;
+    
+    try {
+      this.bot.sendMessage(chatId, '🤖 Digitando...');
+      
+      const response = await this.client.chat.completions({
+        message,
+        stream: true,
+        onToken: (token) => {
+          // Atualizar mensagem progressivamente
+          this.bot.editMessageText(token, { chat_id: chatId, message_id: messageId });
+        }
+      });
+    } catch (error) {
+      this.bot.sendMessage(chatId, '❌ Desculpe, ocorreu um erro.');
+    }
+  }
+}
+```
+
+### Assistente Virtual
+
+```js
+class VirtualAssistant {
+  constructor() {
+    this.client = new SelenaAI({
+      apiKey: process.env.SELENA_API_KEY,
+      logging: 'info'
+    });
+    
+    this.context = [];
+  }
+  
+  async ask(question) {
+    // Adicionar ao contexto
+    this.context.push({ role: 'user', content: question });
+    
+    const response = await this.client.chat.completions({
+      message: this.formatContext()
+    });
+    
+    // Adicionar resposta ao contexto
+    this.context.push({ role: 'assistant', content: response.response });
+    
+    // Manter apenas últimas 10 mensagens
+    if (this.context.length > 10) {
+      this.context = this.context.slice(-10);
+    }
+    
+    return response.response;
+  }
+  
+  formatContext() {
+    return this.context.map(msg => `${msg.role}: ${msg.content}`).join('\n');
+  }
+}
+```
+
+---
+
+Com a Chat API do Selena AI SDK, você pode integrar facilmente conversas inteligentes em suas aplicações JavaScript! 🚀
