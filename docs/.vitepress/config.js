@@ -65,7 +65,12 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: []
+    plugins: [],
+    resolve: {
+      alias: {
+        '@img': '/public'
+      }
+    }
   },
   
   ignoreDeadLinks: true
